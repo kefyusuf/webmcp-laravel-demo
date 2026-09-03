@@ -36,7 +36,7 @@ Human users receive temporary names such as `Guest 4821`. Agent actions receive 
 Keep the package and the demo app as sibling directories during local development:
 
 ```text
-laragon/www/
+projects/
 ├── webmcp-laravel/
 └── webmcp-laravel-demo/
 ```
@@ -59,6 +59,8 @@ php artisan vendor:publish --tag=webmcp-assets --force
 ```
 
 The demo does not need a database for the shared list. It stores demo state in Laravel's file cache under `storage/framework/cache`.
+
+On Windows, Laragon is a convenient place to keep these folders, for example under `C:\laragon\www`, but it is not required. Any local development directory works as long as the package and demo repositories remain siblings.
 
 ## Running Locally
 
@@ -99,6 +101,26 @@ https://your-random-subdomain.ngrok-free.app/prep-list
 Free ngrok tunnels may show an interstitial warning the first time a browser visits the URL. Click "Visit Site" to continue. Agent/browser automation can also avoid the interstitial by sending the `ngrok-skip-browser-warning` request header, but a normal browser visit only needs the one-time confirmation.
 
 If the page loads over HTTPS but Livewire asset or update URLs are generated as HTTP, WebMCP calls can fail because the browser blocks mixed content. This demo configures Laravel's trusted proxy headers in `bootstrap/app.php` so ngrok's forwarded HTTPS scheme is respected.
+
+## Agent Prompt
+
+Use a prompt like this when recording or testing the demo:
+
+```text
+Visit this page:
+
+https://your-ngrok-url.ngrok-free.app/prep-list
+
+First, list the WebMCP tools available on the page. For each tool, tell me its name and what it does.
+
+Then perform these actions step by step. After each step, report which tool you called and the result returned by the tool.
+
+1. Add an item named "passport" to the list, with the note "required for border crossing".
+2. Add another item named "charger" to the list. No note is needed.
+3. Summarize the current full state of the list: which items exist, which ones are completed, and who added each item.
+4. Mark the "passport" item as completed.
+5. Summarize the list again and confirm that the change was applied.
+```
 
 ## How It Works
 
