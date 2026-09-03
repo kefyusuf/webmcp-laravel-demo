@@ -14,6 +14,8 @@ The demo page is a shared preparation list. Humans can add, complete, and remove
 
 ## Demo Flow
 
+[Watch the demo video](https://github.com/kefyusuf/webmcp-laravel-demo/releases/download/demo-video-2026-09-03/demo-video-2026-09-03.mp4).
+
 Open `/prep-list` in a browser that supports WebMCP. The page registers these tools:
 
 - `addItem` - add an item with an optional note.

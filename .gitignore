@@ -1,4 +1,5 @@
 *.log
+docs/*.mp4
 .DS_Store
 .env
 .env.backup
