@@ -54,4 +54,29 @@ class PrepListTest extends TestCase
             ->assertSee('wire:poll.2s', false)
             ->assertSee('wire:ignore', false);
     }
+
+    public function test_legacy_guest_names_are_displayed_in_english(): void
+    {
+        $legacyGuestName = 'Mis'.'afir 9999';
+
+        Cache::store('file')->put('prep-list:items', [[
+            'id' => 'legacy-item',
+            'name' => 'legacy item',
+            'note' => null,
+            'done' => false,
+            'actor' => 'human',
+            'actor_name' => $legacyGuestName,
+        ]]);
+
+        Cache::store('file')->put('prep-list:log', [[
+            'actor' => 'human',
+            'actor_name' => $legacyGuestName,
+            'text' => 'added "legacy item"',
+            'time' => '12:00',
+        ]]);
+
+        Livewire::test(PrepList::class)
+            ->assertSee('Guest 9999')
+            ->assertDontSee($legacyGuestName);
+    }
 }

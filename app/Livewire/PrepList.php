@@ -15,6 +15,8 @@ class PrepList extends Component
 
     private const LOG_KEY = 'prep-list:log';
 
+    private const LEGACY_GUEST_PREFIX = 'Mis'.'afir ';
+
     public array $items = [];
 
     public array $log = [];
@@ -232,8 +234,22 @@ class PrepList extends Component
 
     private function syncFromStore(): void
     {
-        $this->items = Cache::store('file')->get(self::ITEMS_KEY, []);
-        $this->log = Cache::store('file')->get(self::LOG_KEY, []);
+        $this->items = collect(Cache::store('file')->get(self::ITEMS_KEY, []))
+            ->map(fn (array $item) => $this->normalizeActorName($item))
+            ->all();
+
+        $this->log = collect(Cache::store('file')->get(self::LOG_KEY, []))
+            ->map(fn (array $entry) => $this->normalizeActorName($entry))
+            ->all();
+    }
+
+    private function normalizeActorName(array $entry): array
+    {
+        if (isset($entry['actor_name']) && str_starts_with($entry['actor_name'], self::LEGACY_GUEST_PREFIX)) {
+            $entry['actor_name'] = 'Guest '.substr($entry['actor_name'], strlen(self::LEGACY_GUEST_PREFIX));
+        }
+
+        return $entry;
     }
 
     private function actorName(string $actor): string
