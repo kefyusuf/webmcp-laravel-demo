@@ -111,6 +111,8 @@ Visit this page:
 
 https://your-ngrok-url.ngrok-free.app/prep-list
 
+Before opening the page, select your own integrated/in-app browser for this demo, so the page can expose WebMCP through that browser context. Do not switch to an external browser such as Chrome unless I explicitly ask you to.
+
 First, list the WebMCP tools available on the page. For each tool, tell me its name and what it does.
 
 Then perform these actions step by step. After each step, report which tool you called and the result returned by the tool.
